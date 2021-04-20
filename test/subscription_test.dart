@@ -4,13 +4,14 @@ import 'dart:convert';
 import 'package:centrifuge/src/proto/client.pb.dart';
 import 'package:centrifuge/src/subscription.dart';
 import 'package:mockito/mockito.dart';
+import 'package:protobuf/protobuf.dart';
 import 'package:test/test.dart';
 
 import 'src/utils.dart';
 
 void main() {
-  MockClient client;
-  SubscriptionImpl subscription;
+  late MockClient client;
+  late SubscriptionImpl subscription;
   final channel = 'test channel';
 
   setUp(() {
@@ -59,7 +60,7 @@ void main() {
 
     await subscribeSuccess();
 
-    verify(client.sendMessage(any, any)).called(2);
+    verify(client.sendMessage(any as GeneratedMessage, any as GeneratedMessage)).called(2);
   });
 
   test('subscription doesn\'t resubscribe if wasn\'t subscribed', () async {
